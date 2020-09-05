@@ -1,2 +1,2 @@
 # SlashAndSpells
-#Game made by AtomicBombKiller, PyroSoul, and CheviHdez
+Game made by AtomicBombKiller, PyroSoul, and CheviHdez
