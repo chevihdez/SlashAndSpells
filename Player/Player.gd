@@ -1,27 +1,116 @@
 extends KinematicBody2D
 
-var speed = 125
+var speed = 100
 var friction = 0.3
 var acceleration = 0.1
 var velocity = Vector2.ZERO
 
-func _physics_process(delta):
-	var input_velocity = Vector2.ZERO
-	# Check input for "desired" velocity
-	if Input.is_action_pressed("Move_Right"):
-		input_velocity.x += 1
-		$Body.scale.x = 1
-	if Input.is_action_pressed("Move_Left"):
-		input_velocity.x -= 1
-		$Body.scale.x = -1
-	input_velocity = input_velocity.normalized() * speed
+var spell = "Light"
 
+var HP = 100
+var MaxHP = 100
+
+var Stamina = 100
+var MaxST = 100
+
+
+var stop = false
+var rolling = false
+var direction = "right"
+
+func _ready():
+	$UI/HPBar.max_value = MaxHP
+	$UI/STBar.max_value = MaxST
+func _physics_process(_delta):
+	var input_velocity = Vector2.ZERO
+
+	$UI/HPBar.value = HP
+	$UI/STBar.value = Stamina
+	
+	if $Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled == false:
+		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(1,10,1)
+	else:
+		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(10,1,1)
+	if stop == false:
+		if Input.is_action_pressed("Move_Right"):
+			input_velocity.x += 1
+			$Body.scale.x = 1
+			direction = "right"
+			if not spell == "none":
+				$AnimationPlayer.play("Walk (Spell)")
+			else:
+				$AnimationPlayer.play("Walk")
+		elif Input.is_action_pressed("Move_Left"):
+			input_velocity.x -= 1
+			$Body.scale.x = -1
+			direction = "left"
+			if not spell == "none":
+				$AnimationPlayer.play("Walk (Spell)")
+			else:
+				$AnimationPlayer.play("Walk")
+		else:
+			$AnimationPlayer.play("Idle")
+		
+		if Input.is_action_just_pressed("Attack_Light") and Stamina >= 20:
+			stop = true
+			$AnimationPlayer.play("LightAttack")
+			$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = false
+			Stamina -= 20
+		if Input.is_action_just_pressed("Move_Roll") and Stamina >= 25:
+			rolling = true
+			stop = true
+			set_collision_layer_bit(1, false)
+			set_collision_mask_bit(1, false)
+			$Body/Body/HurtBox.set_collision_mask_bit(3, false)
+			$AnimationPlayer.play("Roll")
+			Stamina -= 25
+	input_velocity = input_velocity.normalized() * speed
+	
+	if rolling == true:
+		if direction == "right":
+			velocity.x += 60
+		else:
+			velocity.x -= 60
+		
+	
+	elif $AnimationPlayer.current_animation == "LightAttack":
+		if direction == "right":
+			velocity.x += 15
+		else:
+			velocity.x -= 15
+	else:
+		Stamina += .3
 	# If there's input, accelerate to the input velocity
 	if input_velocity.length() > 0:
 		velocity = velocity.linear_interpolate(input_velocity, acceleration)
-		$AnimationPlayer.play("Walk")
+		
 	else:
 		# If there's no input, slow down to (0, 0)
 		velocity = velocity.linear_interpolate(Vector2.ZERO, friction)
-		$AnimationPlayer.play("Idle")
+	
 	velocity = move_and_slide(velocity)
+	if HP <= 0:
+		queue_free()
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "LightAttack":
+		stop = false
+		$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = true
+	if anim_name == "Roll":
+		rolling = false
+		stop = false
+		set_collision_layer_bit(1, true)
+		set_collision_mask_bit(1, true)
+		$Body/Body/HurtBox.set_collision_mask_bit(3, true)
+
+
+func _on_Area2D_area_entered(_area):
+	$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.call_deferred("set", "disabled", true)
+
+
+func _on_Stun_timeout():
+	pass # Replace with function body.
+
+func _on_HurtBox_area_entered(area):
+	HP -= 15
+	print(area.name)

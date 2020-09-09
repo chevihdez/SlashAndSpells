@@ -1,0 +1,106 @@
+extends KinematicBody2D
+
+var speed = 50
+var friction = 0.3
+var acceleration = 0.1
+var velocity = Vector2.ZERO
+
+var HP = 50
+export var Max_HP = 50
+var stop = false
+var dead = false
+
+export var main = false
+
+var direction = "right"
+func _ready():
+	$UI/HPBar.max_value = Max_HP
+	HP = Max_HP
+func _physics_process(_delta):
+	if $Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled == false:
+		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(1,10,1)
+	else:
+		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(10,1,1)
+	$UI/HPBar.value = HP
+	var input_velocity = Vector2.ZERO
+	var distance_to_player = sqrt(pow((self.position.x-$'/root/Main/Player'.position.x), 2) + pow((self.position.y-$'/root/Main/Player'.position.y),2))
+	
+	# Check input for "desired" velocity
+	if stop == false:
+		if distance_to_player <= 30:
+			stop = true
+			$AnimationPlayer.play("LightAttack")
+			$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = false
+			if direction == "right":
+				velocity.x += 15
+			else:
+				velocity.x -= 15
+		elif $'/root/Main/Player'.position.x > self.position.x:
+			input_velocity.x += 1
+			$Body.scale.x = 1
+			direction = "right"
+			$AnimationPlayer.play("Walk")
+		elif $'/root/Main/Player'.position.x < self.position.x:
+			input_velocity.x -= 1
+			$Body.scale.x = -1
+			direction = "left"
+			$AnimationPlayer.play("Walk")
+			
+
+
+	else:
+		return
+	input_velocity = input_velocity.normalized() * speed
+
+	# If there's input, accelerate to the input velocity
+	if input_velocity.length() > 0:
+		velocity = velocity.linear_interpolate(input_velocity, acceleration)
+		
+	else:
+		# If there's no input, slow down to (0, 0)
+		velocity = velocity.linear_interpolate(Vector2.ZERO, friction)
+	if $AnimationPlayer.current_animation == "LightAttack":
+		print("attack")
+		if direction == "right":
+			velocity.x += 15
+		else:
+			velocity.x -= 15
+	if not $AnimationPlayer.current_animation == "LightAttack":
+		$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = true
+	velocity = move_and_slide(velocity)
+	if HP <= 0:
+		$AnimationPlayer.play("Die")
+		$CollisionShape2D.disabled = true
+		stop = true
+		dead = true
+		HP = 0
+		$UI/HPBar.visible = false
+	else:
+		if HP < Max_HP:
+			$UI/HPBar.visible = true
+	if dead == true:
+		$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.call_deferred("set", "disabled", true)
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "LightAttack":
+		stop = false
+		$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = true
+
+
+func _on_HurtBox_area_entered(_area):
+	if dead == false:
+		$AnimationPlayer.play("Stagger")
+		stop = true
+		$Stun.start()
+		HP -= 15
+	
+	
+
+
+func _on_Stun_timeout():
+	modulate = Color(1,1,1)
+	stop = false
+
+
+func _on_Area2D_area_entered(_area):
+	$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.call_deferred("set", "disabled", true)
+	print("Enemy Hit")
