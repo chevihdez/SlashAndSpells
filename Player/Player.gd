@@ -13,6 +13,7 @@ var MaxHP = 100
 var Stamina = 100
 var MaxST = 100
 
+var combo = false
 
 var stop = false
 var rolling = false
@@ -53,9 +54,15 @@ func _physics_process(_delta):
 		
 		if Input.is_action_just_pressed("Attack_Light") and Stamina >= 20:
 			stop = true
-			$AnimationPlayer.play("LightAttack")
 			$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = false
 			Stamina -= 20
+			$ComboEnd.start()
+			
+			if combo == false:
+				$AnimationPlayer.play("Attack2")
+			else:
+				$AnimationPlayer.play("LightAttack")
+			combo = true
 		if Input.is_action_just_pressed("Move_Roll") and Stamina >= 25:
 			rolling = true
 			stop = true
@@ -74,6 +81,7 @@ func _physics_process(_delta):
 		
 	
 	elif $AnimationPlayer.current_animation == "LightAttack":
+		
 		if direction == "right":
 			velocity.x += 15
 		else:
@@ -93,7 +101,7 @@ func _physics_process(_delta):
 		queue_free()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	if anim_name == "LightAttack":
+	if anim_name == "Attack2" or  anim_name == "LightAttack":
 		stop = false
 		$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = true
 	if anim_name == "Roll":
@@ -114,3 +122,7 @@ func _on_Stun_timeout():
 func _on_HurtBox_area_entered(area):
 	HP -= 15
 	print(area.name)
+
+
+func _on_ComboEnd_timeout():
+	combo = false
