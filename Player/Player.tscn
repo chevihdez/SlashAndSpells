@@ -3546,8 +3546,10 @@ __meta__ = {
 [node name="Spell" type="Node2D" parent="Body/ArmL/ForeArmL/HandL"]
 
 [node name="Light" parent="Body/ArmL/ForeArmL/HandL/Spell" instance=ExtResource( 21 )]
+visible = false
 position = Vector2( 1.89933, -2.80101 )
 rotation = 0.0277232
+frame = 1
 
 [node name="ThighL" type="Sprite" parent="Body"]
 position = Vector2( 4.5, 4.5 )

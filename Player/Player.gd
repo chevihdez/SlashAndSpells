@@ -6,6 +6,7 @@ var acceleration = 0.1
 var velocity = Vector2.ZERO
 
 var spell = "Light"
+var spell = "none"
 var selected_slot = "SpellSlots1"
 var slots = ["SpellSlots1","SpellSlots2","SpellSlots3"]
 
@@ -36,6 +37,7 @@ func _physics_process(_delta):
 		if selected_slot == i.name:
 			i.self_modulate = Color(5,5,5)
 			i.get_child().play()
+			i.get_child(0).play()
 			
 		else:
 			i.self_modulate = Color(1,1,1)
@@ -162,10 +164,16 @@ func _input(event):
 	if Input.is_key_pressed(KEY_1):
 		selected_slot = "SpellSlots1"
 
+		spell == "none"
+		$Body/ArmL/ForeArmL/HandL/Spell/Light.visible = false
 	elif Input.is_key_pressed(KEY_2):
 		selected_slot = "SpellSlots2"
 		
+		spell = "Light"
+		$Body/ArmL/ForeArmL/HandL/Spell/Light.visible = true
 	elif Input.is_key_pressed(KEY_3):
 		selected_slot = "SpellSlots3"
+		spell = "none"
+		$Body/ArmL/ForeArmL/HandL/Spell/Light.visible = false
 func _on_Jump_timeout():
 	jumping = false
