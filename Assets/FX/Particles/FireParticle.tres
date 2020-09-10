@@ -1,0 +1,19 @@
+[gd_resource type="ParticlesMaterial" load_steps=4 format=2]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.0588235, 0.631373, 0.705882, 1, 0.0588235, 0.631373, 0.705882, 0.329412 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="CurveTexture" id=3]
+
+[resource]
+trail_size_modifier = SubResource( 3 )
+trail_color_modifier = SubResource( 2 )
+emission_shape = 1
+emission_sphere_radius = 2.0
+flag_disable_z = true
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_random = 1.0

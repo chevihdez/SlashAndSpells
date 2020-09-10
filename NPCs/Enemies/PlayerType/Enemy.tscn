@@ -25,7 +25,7 @@ extents = Vector2( 10, 27.6439 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1.47828, 10 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=3]
 resource_name = "Die"
 length = 0.8
 tracks/0/type = "value"
@@ -677,7 +677,7 @@ tracks/53/keys = {
 "values": [ -5.85335, 33.7333, 70.669 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -1233,7 +1233,7 @@ tracks/45/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/ThighL:position")
@@ -1788,7 +1788,7 @@ tracks/45/keys = {
 "values": [ 90.0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "Stagger"
 length = 1.5
 loop = true
@@ -2441,7 +2441,7 @@ tracks/53/keys = {
 "values": [ -5.85335 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -2997,7 +2997,7 @@ tracks/45/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 10, 27.9842 )
 
 [node name="Enemy" type="KinematicBody2D"]
@@ -3008,8 +3008,7 @@ script = ExtResource( 1 )
 [node name="Body" type="Node2D" parent="."]
 
 [node name="ArmL" type="Sprite" parent="Body"]
-position = Vector2( 12.9576, 18.4641 )
-rotation = -0.413524
+position = Vector2( 4.5, -14 )
 texture = ExtResource( 7 )
 offset = Vector2( 3, 5 )
 __meta__ = {
@@ -3019,7 +3018,6 @@ __meta__ = {
 
 [node name="ForeArmL" type="Sprite" parent="Body/ArmL"]
 position = Vector2( 7, 12.5 )
-rotation = 1.92012
 texture = ExtResource( 16 )
 offset = Vector2( -1, 4 )
 __meta__ = {
@@ -3045,8 +3043,8 @@ __meta__ = {
 }
 
 [node name="ThighL" type="Sprite" parent="Body"]
-position = Vector2( 2.78724, 24.403 )
-rotation = 1.7168
+position = Vector2( 4.5, 4.5 )
+rotation = -0.274575
 texture = ExtResource( 5 )
 offset = Vector2( 0.5, 5 )
 __meta__ = {
@@ -3056,7 +3054,7 @@ __meta__ = {
 
 [node name="ShinL" type="Sprite" parent="Body/ThighL"]
 position = Vector2( 1, 10 )
-rotation = -0.231473
+rotation = 0.187363
 texture = ExtResource( 9 )
 offset = Vector2( 0, 5.5 )
 __meta__ = {
@@ -3065,7 +3063,7 @@ __meta__ = {
 
 [node name="FootL" type="Sprite" parent="Body/ThighL/ShinL"]
 position = Vector2( -2, 12 )
-rotation = 0.729787
+rotation = 0.0861364
 texture = ExtResource( 4 )
 offset = Vector2( 2.5, 1 )
 __meta__ = {
@@ -3087,8 +3085,7 @@ __meta__ = {
 }
 
 [node name="Body" type="Sprite" parent="Body"]
-position = Vector2( 1.07855, 23.1621 )
-rotation = 1.23341
+position = Vector2( 0.461796, -0.378716 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, -3.5 )
 __meta__ = {
@@ -3106,8 +3103,8 @@ position = Vector2( 0.56958, 1.42395 )
 shape = SubResource( 1 )
 
 [node name="ThighR" type="Sprite" parent="Body"]
-position = Vector2( -5.71276, 24.403 )
-rotation = 1.70192
+position = Vector2( -4, 4.5 )
+rotation = 0.412676
 texture = ExtResource( 2 )
 offset = Vector2( 0.5, 5 )
 __meta__ = {
@@ -3117,7 +3114,7 @@ __meta__ = {
 
 [node name="ShinR" type="Sprite" parent="Body/ThighR"]
 position = Vector2( 1, 10 )
-rotation = -0.128131
+rotation = -0.250624
 texture = ExtResource( 10 )
 offset = Vector2( 0, 5.5 )
 __meta__ = {
@@ -3150,8 +3147,7 @@ __meta__ = {
 }
 
 [node name="Head" type="Sprite" parent="Body"]
-position = Vector2( 16.9929, 16.9459 )
-rotation = 1.231
+position = Vector2( 1, -17.5 )
 texture = ExtResource( 8 )
 offset = Vector2( 0.5, -4.5 )
 __meta__ = {
@@ -3160,8 +3156,7 @@ __meta__ = {
 }
 
 [node name="ArmR" type="Sprite" parent="Body"]
-position = Vector2( 10.3806, 12.5661 )
-rotation = 0.711854
+position = Vector2( -5.45942, -13.949 )
 texture = ExtResource( 13 )
 offset = Vector2( -3, 5 )
 __meta__ = {
@@ -3171,7 +3166,6 @@ __meta__ = {
 
 [node name="ForeArmR" type="Sprite" parent="Body/ArmR"]
 position = Vector2( -7, 12.5 )
-rotation = -0.822712
 texture = ExtResource( 14 )
 offset = Vector2( 1, 4 )
 __meta__ = {
@@ -3180,7 +3174,6 @@ __meta__ = {
 
 [node name="HandR" type="Sprite" parent="Body/ArmR/ForeArmR"]
 position = Vector2( 2.91683, 9.48256 )
-rotation = 0.151265
 texture = ExtResource( 15 )
 
 [node name="Weapon" type="Sprite" parent="Body/ArmR/ForeArmR/HandR"]
@@ -3215,16 +3208,16 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
 playback_default_blend_time = 0.15
-anims/Die = SubResource( 8 )
-anims/Idle = SubResource( 3 )
-anims/LightAttack = SubResource( 4 )
-anims/Stagger = SubResource( 7 )
-anims/Walk = SubResource( 5 )
+anims/Die = SubResource( 3 )
+anims/Idle = SubResource( 4 )
+anims/LightAttack = SubResource( 5 )
+anims/Stagger = SubResource( 6 )
+anims/Walk = SubResource( 7 )
 blend_times = [ "Stagger", "Die", 0.5 ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 0.815628 )
-shape = SubResource( 6 )
+shape = SubResource( 8 )
 
 [node name="Stun" type="Timer" parent="."]
 one_shot = true
@@ -3235,6 +3228,7 @@ z_as_relative = false
 
 [node name="HPBar" type="TextureProgress" parent="UI"]
 visible = false
+light_mask = 0
 margin_left = -9.0
 margin_top = -35.0
 margin_right = 9.0
@@ -3247,6 +3241,23 @@ nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Ground Detection" type="RayCast2D" parent="."]
+position = Vector2( 0, 28.8476 )
+enabled = true
+cast_to = Vector2( 0, 1.2 )
+
+[node name="Wall DetectionL" type="RayCast2D" parent="."]
+position = Vector2( -10, 19 )
+enabled = true
+cast_to = Vector2( -1.2, 0 )
+collision_mask = 1024
+
+[node name="Wall DetectionR" type="RayCast2D" parent="."]
+position = Vector2( 9.92968, 19 )
+enabled = true
+cast_to = Vector2( 1.2, 0 )
+collision_mask = 1024
 [connection signal="area_entered" from="Body/Body/HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="area_entered" from="Body/ArmR/ForeArmR/HandR/Weapon/Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

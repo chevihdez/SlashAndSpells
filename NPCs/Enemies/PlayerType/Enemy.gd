@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var speed = 50
+var speed = 75
 var friction = 0.3
 var acceleration = 0.1
 var velocity = Vector2.ZERO
@@ -9,8 +9,9 @@ var HP = 50
 export var Max_HP = 50
 var stop = false
 var dead = false
+var agro = false
 
-export var main = false
+
 
 var direction = "right"
 func _ready():
@@ -27,7 +28,7 @@ func _physics_process(_delta):
 	
 	# Check input for "desired" velocity
 	if stop == false:
-		if distance_to_player <= 120:
+		if distance_to_player <= 120 or agro == true:
 			if distance_to_player <= 30:
 				stop = true
 				$AnimationPlayer.play("LightAttack")
@@ -46,7 +47,12 @@ func _physics_process(_delta):
 				$Body.scale.x = -1
 				direction = "left"
 				$AnimationPlayer.play("Walk")
-			
+			if $"Wall DetectionL".is_colliding() or $"Wall DetectionR".is_colliding():
+				velocity.y -= 200
+			if distance_to_player >= 240:
+				agro = false
+		else:
+			$AnimationPlayer.play("Idle")
 			
 
 
@@ -77,11 +83,15 @@ func _physics_process(_delta):
 		dead = true
 		HP = 0
 		$UI/HPBar.visible = false
+		
 	else:
 		if HP < Max_HP:
 			$UI/HPBar.visible = true
+			agro = true
 	if dead == true:
 		$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.call_deferred("set", "disabled", true)
+	if $"Ground Detection".is_colliding() == false:
+		velocity.y += 45
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "LightAttack":
 		stop = false

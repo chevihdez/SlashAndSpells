@@ -15,6 +15,9 @@ var MaxHP = 100
 var Stamina = 100
 var MaxST = 100
 
+var Mana = 100
+var MaxMP = 100
+
 var combo = false
 
 var stop = false
@@ -25,12 +28,18 @@ var direction = "right"
 func _ready():
 	$UI/HPBar.max_value = MaxHP
 	$UI/STBar.max_value = MaxST
+	$UI/MPBar.max_value = MaxMP
 func _physics_process(_delta):
 	print($"Ground Detection".is_colliding())
 	var input_velocity = Vector2.ZERO
 
 	$UI/HPBar.value = HP
 	$UI/STBar.value = Stamina
+	$UI/MPBar.value = Mana
+	
+	HP = clamp(HP, 0,MaxHP)
+	Stamina = clamp(Stamina, 0,MaxST)
+	Mana = clamp(Mana, 0,MaxMP)
 	
 	for i in get_tree().get_nodes_in_group("Spells"):
 		if selected_slot == i.name:
@@ -67,7 +76,7 @@ func _physics_process(_delta):
 			$AnimationPlayer.play("Idle")
 			
 		if Input.is_action_just_pressed("Move_Jump"):
-			if $"Ground Detection".is_colliding() and jumping == false:
+			if $"Ground Detection".is_colliding():
 				jumping = true
 				$Jump.start()
 			
@@ -110,7 +119,7 @@ func _physics_process(_delta):
 		Stamina += .3
 		
 	if jumping == true:
-		velocity.y -= 35
+		velocity.y = -80
 	
 	elif $"Ground Detection".is_colliding() == false:
 		velocity.y += 65
@@ -162,7 +171,7 @@ func _input(event):
 	if Input.is_key_pressed(KEY_1):
 		selected_slot = "SpellSlots1"
 
-		spell == "none"
+		spell = "none"
 		$Body/ArmL/ForeArmL/HandL/Spell/Light.visible = false
 	elif Input.is_key_pressed(KEY_2):
 		selected_slot = "SpellSlots2"
