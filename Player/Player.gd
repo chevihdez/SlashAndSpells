@@ -6,6 +6,8 @@ var acceleration = 0.1
 var velocity = Vector2.ZERO
 
 var spell = "Light"
+var selected_slot = "SpellSlots1"
+var slots = ["SpellSlots1","SpellSlots2","SpellSlots3"]
 
 var HP = 100
 var MaxHP = 100
@@ -30,6 +32,14 @@ func _physics_process(_delta):
 	$UI/HPBar.value = HP
 	$UI/STBar.value = Stamina
 	
+	for i in get_tree().get_nodes_in_group("Spells"):
+		if selected_slot == i.name:
+			i.self_modulate = Color(5,5,5)
+			i.get_child().play()
+			
+		else:
+			i.self_modulate = Color(1,1,1)
+			i.get_child().stop()
 	if $Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled == false:
 		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(1,10,1)
 	else:
@@ -148,7 +158,14 @@ func _on_ComboEnd_timeout():
 func _input(event):
 	if Input.is_key_pressed(KEY_H):
 		HP +=15
+		
+	if Input.is_key_pressed(KEY_1):
+		selected_slot = "SpellSlots1"
 
-
+	elif Input.is_key_pressed(KEY_2):
+		selected_slot = "SpellSlots2"
+		
+	elif Input.is_key_pressed(KEY_3):
+		selected_slot = "SpellSlots3"
 func _on_Jump_timeout():
 	jumping = false

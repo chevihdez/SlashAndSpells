@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Assets/Armors/Default/ShinR.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Armors/Default/FootR.png" type="Texture" id=2]
@@ -22,6 +22,8 @@
 [ext_resource path="res://Assets/UI/PC_StaminaBar.png" type="Texture" id=20]
 [ext_resource path="res://Assets/Spells/Light/Light.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Assets/FX/Slices/Slice1.png" type="Texture" id=22]
+[ext_resource path="res://Assets/UI/SpellSlot.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Spells/Light.png" type="Texture" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 27.6439 )
@@ -29,7 +31,7 @@ extents = Vector2( 10, 27.6439 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1.47828, 10 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=3]
 resource_name = "Attack2"
 length = 0.5
 step = 0.025
@@ -3477,6 +3479,26 @@ tracks/48/keys = {
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 10, 27.9842 )
 
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 24 )
+region = Rect2( 0, 0, 8, 11 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 24 )
+region = Rect2( 8, 0, 8, 11 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 24 )
+region = Rect2( 16, 0, 8, 11 )
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 3
 collision_mask = 2
@@ -3526,7 +3548,6 @@ __meta__ = {
 [node name="Light" parent="Body/ArmL/ForeArmL/HandL/Spell" instance=ExtResource( 21 )]
 position = Vector2( 1.89933, -2.80101 )
 rotation = 0.0277232
-frame = 1
 
 [node name="ThighL" type="Sprite" parent="Body"]
 position = Vector2( 4.5, 4.5 )
@@ -3581,14 +3602,12 @@ __meta__ = {
 }
 
 [node name="HurtBox" type="Area2D" parent="Body/Body"]
-visible = false
 position = Vector2( -0.461796, 0.378716 )
 monitorable = false
 collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Body/HurtBox"]
-visible = false
 position = Vector2( 0.56958, 1.42395 )
 shape = SubResource( 1 )
 
@@ -3719,7 +3738,6 @@ anims/Walk = SubResource( 7 )
 blend_times = [ "Roll", "Idle", 0.01, "Roll", "LightAttack", 0.01, "Roll", "Roll", 0.01, "Roll", "Walk", 0.01, "Roll", "Walk (Spell)", 0.01 ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, 0.815628 )
 shape = SubResource( 9 )
 
@@ -3728,7 +3746,6 @@ shape = SubResource( 9 )
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="STBar" type="TextureProgress" parent="UI"]
-visible = false
 margin_left = 40.3432
 margin_top = 39.7237
 margin_right = 630.343
@@ -3740,7 +3757,6 @@ __meta__ = {
 }
 
 [node name="HPBar" type="TextureProgress" parent="UI"]
-visible = false
 margin_right = 638.0
 margin_bottom = 59.0
 texture_under = ExtResource( 18 )
@@ -3748,6 +3764,66 @@ texture_progress = ExtResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SpellSlots1" type="TextureRect" parent="UI" groups=[
+"Spells",
+]]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -114.284
+margin_top = -65.3318
+margin_right = -49.2844
+margin_bottom = -0.331787
+texture = ExtResource( 23 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="UI/SpellSlots1"]
+
+[node name="SpellSlots2" type="TextureRect" parent="UI" groups=[
+"Spells",
+]]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -31.8775
+margin_top = -65.3318
+margin_right = 33.1225
+margin_bottom = -0.331787
+texture = ExtResource( 23 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="AnimatedSprite" parent="UI/SpellSlots2"]
+position = Vector2( 32.7579, 28.9782 )
+scale = Vector2( 6.66966, 5.16962 )
+frames = SubResource( 13 )
+
+[node name="SpellSlots3" type="TextureRect" parent="UI" groups=[
+"Spells",
+]]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 46.0345
+margin_top = -65.3318
+margin_right = 111.034
+margin_bottom = -0.331787
+texture = ExtResource( 23 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="UI/SpellSlots3"]
 
 [node name="ComboEnd" type="Timer" parent="."]
 one_shot = true
