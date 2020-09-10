@@ -17,12 +17,14 @@ var combo = false
 
 var stop = false
 var rolling = false
+var jumping = false
 var direction = "right"
 
 func _ready():
 	$UI/HPBar.max_value = MaxHP
 	$UI/STBar.max_value = MaxST
 func _physics_process(_delta):
+	print($"Ground Detection".is_colliding())
 	var input_velocity = Vector2.ZERO
 
 	$UI/HPBar.value = HP
@@ -49,8 +51,16 @@ func _physics_process(_delta):
 				$AnimationPlayer.play("Walk (Spell)")
 			else:
 				$AnimationPlayer.play("Walk")
+		
+				
 		else:
 			$AnimationPlayer.play("Idle")
+			
+		if Input.is_action_just_pressed("Move_Jump"):
+			if $"Ground Detection".is_colliding() and jumping == false:
+				jumping = true
+				$Jump.start()
+			
 		
 		if Input.is_action_just_pressed("Attack_Light") and Stamina >= 20:
 			stop = true
@@ -88,6 +98,13 @@ func _physics_process(_delta):
 			velocity.x -= 15
 	else:
 		Stamina += .3
+		
+	if jumping == true:
+		velocity.y -= 35
+	
+	elif $"Ground Detection".is_colliding() == false:
+		velocity.y += 65
+	
 	# If there's input, accelerate to the input velocity
 	if input_velocity.length() > 0:
 		velocity = velocity.linear_interpolate(input_velocity, acceleration)
@@ -121,8 +138,17 @@ func _on_Stun_timeout():
 
 func _on_HurtBox_area_entered(area):
 	HP -= 15
-	print(area.name)
+	
 
 
 func _on_ComboEnd_timeout():
 	combo = false
+
+
+func _input(event):
+	if Input.is_key_pressed(KEY_H):
+		HP +=15
+
+
+func _on_Jump_timeout():
+	jumping = false

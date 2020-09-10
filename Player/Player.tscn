@@ -29,7 +29,7 @@ extents = Vector2( 10, 27.6439 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1.47828, 10 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=10]
 resource_name = "Attack2"
 length = 0.5
 step = 0.025
@@ -3485,7 +3485,8 @@ script = ExtResource( 13 )
 [node name="Body" type="Node2D" parent="."]
 
 [node name="ArmL" type="Sprite" parent="Body"]
-position = Vector2( 4.5, -14 )
+position = Vector2( 4.19592, -14.6406 )
+rotation = -0.119849
 texture = ExtResource( 5 )
 offset = Vector2( 3, 5 )
 __meta__ = {
@@ -3525,7 +3526,7 @@ __meta__ = {
 [node name="Light" parent="Body/ArmL/ForeArmL/HandL/Spell" instance=ExtResource( 21 )]
 position = Vector2( 1.89933, -2.80101 )
 rotation = 0.0277232
-frame = 2
+frame = 1
 
 [node name="ThighL" type="Sprite" parent="Body"]
 position = Vector2( 4.5, 4.5 )
@@ -3570,7 +3571,8 @@ __meta__ = {
 }
 
 [node name="Body" type="Sprite" parent="Body"]
-position = Vector2( 0.461796, -0.378716 )
+position = Vector2( 0.415036, -0.893066 )
+rotation = -0.0152154
 texture = ExtResource( 4 )
 offset = Vector2( 0, -3.5 )
 __meta__ = {
@@ -3579,12 +3581,14 @@ __meta__ = {
 }
 
 [node name="HurtBox" type="Area2D" parent="Body/Body"]
+visible = false
 position = Vector2( -0.461796, 0.378716 )
 monitorable = false
 collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Body/HurtBox"]
+visible = false
 position = Vector2( 0.56958, 1.42395 )
 shape = SubResource( 1 )
 
@@ -3634,7 +3638,8 @@ __meta__ = {
 }
 
 [node name="Head" type="Sprite" parent="Body"]
-position = Vector2( 0.62542, -17.3127 )
+position = Vector2( -4.61867, -16.3763 )
+rotation = -0.328875
 texture = ExtResource( 8 )
 offset = Vector2( 0.5, -4.5 )
 __meta__ = {
@@ -3643,7 +3648,8 @@ __meta__ = {
 }
 
 [node name="ArmR" type="Sprite" parent="Body"]
-position = Vector2( -5.45942, -13.949 )
+position = Vector2( -5.03416, -14.4718 )
+rotation = 0.0551615
 texture = ExtResource( 3 )
 offset = Vector2( -3, 5 )
 __meta__ = {
@@ -3660,7 +3666,8 @@ __meta__ = {
 }
 
 [node name="HandR" type="Sprite" parent="Body/ArmR/ForeArmR"]
-position = Vector2( 2.91683, 9.48256 )
+position = Vector2( 2.21146, 10.207 )
+rotation = 1.00955
 texture = ExtResource( 15 )
 
 [node name="Weapon" type="Sprite" parent="Body/ArmR/ForeArmR/HandR"]
@@ -3682,7 +3689,6 @@ disabled = true
 visible = false
 position = Vector2( 0.218796, 2.48267 )
 rotation = 1.5708
-scale = Vector2( 1, 1 )
 texture = ExtResource( 22 )
 flip_h = true
 flip_v = true
@@ -3713,6 +3719,7 @@ anims/Walk = SubResource( 7 )
 blend_times = [ "Roll", "Idle", 0.01, "Roll", "LightAttack", 0.01, "Roll", "Roll", 0.01, "Roll", "Walk", 0.01, "Roll", "Walk (Spell)", 0.01 ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 0.815628 )
 shape = SubResource( 9 )
 
@@ -3721,6 +3728,7 @@ shape = SubResource( 9 )
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="STBar" type="TextureProgress" parent="UI"]
+visible = false
 margin_left = 40.3432
 margin_top = 39.7237
 margin_right = 630.343
@@ -3732,6 +3740,7 @@ __meta__ = {
 }
 
 [node name="HPBar" type="TextureProgress" parent="UI"]
+visible = false
 margin_right = 638.0
 margin_bottom = 59.0
 texture_under = ExtResource( 18 )
@@ -3742,8 +3751,19 @@ __meta__ = {
 
 [node name="ComboEnd" type="Timer" parent="."]
 one_shot = true
+
+[node name="Jump" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="Ground Detection" type="RayCast2D" parent="."]
+position = Vector2( 0, 28.8476 )
+enabled = true
+cast_to = Vector2( 0, 1 )
 [connection signal="area_entered" from="Body/Body/HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="area_entered" from="Body/ArmR/ForeArmR/HandR/Weapon/Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Stun" to="." method="_on_Stun_timeout"]
 [connection signal="timeout" from="ComboEnd" to="." method="_on_ComboEnd_timeout"]
+[connection signal="timeout" from="Jump" to="." method="_on_Jump_timeout"]

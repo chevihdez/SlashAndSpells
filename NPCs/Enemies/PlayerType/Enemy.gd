@@ -27,24 +27,26 @@ func _physics_process(_delta):
 	
 	# Check input for "desired" velocity
 	if stop == false:
-		if distance_to_player <= 30:
-			stop = true
-			$AnimationPlayer.play("LightAttack")
-			$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = false
-			if direction == "right":
-				velocity.x += 15
-			else:
-				velocity.x -= 15
-		elif $'/root/Main/Player'.position.x > self.position.x:
-			input_velocity.x += 1
-			$Body.scale.x = 1
-			direction = "right"
-			$AnimationPlayer.play("Walk")
-		elif $'/root/Main/Player'.position.x < self.position.x:
-			input_velocity.x -= 1
-			$Body.scale.x = -1
-			direction = "left"
-			$AnimationPlayer.play("Walk")
+		if distance_to_player <= 120:
+			if distance_to_player <= 30:
+				stop = true
+				$AnimationPlayer.play("LightAttack")
+				$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = false
+				if direction == "right":
+					velocity.x += 15
+				else:
+					velocity.x -= 15
+			elif $'/root/Main/Player'.position.x > self.position.x:
+				input_velocity.x += 1
+				$Body.scale.x = 1
+				direction = "right"
+				$AnimationPlayer.play("Walk")
+			elif $'/root/Main/Player'.position.x < self.position.x:
+				input_velocity.x -= 1
+				$Body.scale.x = -1
+				direction = "left"
+				$AnimationPlayer.play("Walk")
+			
 			
 
 
@@ -60,7 +62,7 @@ func _physics_process(_delta):
 		# If there's no input, slow down to (0, 0)
 		velocity = velocity.linear_interpolate(Vector2.ZERO, friction)
 	if $AnimationPlayer.current_animation == "LightAttack":
-		print("attack")
+		
 		if direction == "right":
 			velocity.x += 15
 		else:
@@ -103,4 +105,4 @@ func _on_Stun_timeout():
 
 func _on_Area2D_area_entered(_area):
 	$Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.call_deferred("set", "disabled", true)
-	print("Enemy Hit")
+	
