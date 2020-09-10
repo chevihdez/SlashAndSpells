@@ -5,7 +5,6 @@ var friction = 0.3
 var acceleration = 0.1
 var velocity = Vector2.ZERO
 
-var spell = "Light"
 var spell = "none"
 var selected_slot = "SpellSlots1"
 var slots = ["SpellSlots1","SpellSlots2","SpellSlots3"]
@@ -36,12 +35,11 @@ func _physics_process(_delta):
 	for i in get_tree().get_nodes_in_group("Spells"):
 		if selected_slot == i.name:
 			i.self_modulate = Color(5,5,5)
-			i.get_child().play()
 			i.get_child(0).play()
 			
 		else:
 			i.self_modulate = Color(1,1,1)
-			i.get_child().stop()
+			i.get_child(0).stop()
 	if $Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled == false:
 		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(1,10,1)
 	else:
