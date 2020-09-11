@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Assets/Spells/Light.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Spells/Light/Light.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Lighting/Light.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Spells/Light/Light.gd" type="Script" id=3]
 [ext_resource path="res://Assets/FX/Particles/blue_grey_50_opacity.png" type="Texture" id=4]

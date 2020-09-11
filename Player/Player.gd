@@ -8,6 +8,7 @@ var velocity = Vector2.ZERO
 var spell = "none"
 var selected_slot = "SpellSlots1"
 var slots = ["SpellSlots1","SpellSlots2","SpellSlots3"]
+var spells = ["Heal","Light","None"]
 
 var HP = 100
 var MaxHP = 100
@@ -25,12 +26,21 @@ var rolling = false
 var jumping = false
 var direction = "right"
 
+signal spell_casted 
+signal spell_switched
+
 func _ready():
 	$UI/HPBar.max_value = MaxHP
 	$UI/STBar.max_value = MaxST
 	$UI/MPBar.max_value = MaxMP
+	
+	
+	for i in slots:
+		get_node("UI/" + str(i)).texture = load("Assets/Spells/" + str(spells[int(i)-1]) + "/Profile.png")
+		print(i)
+
+
 func _physics_process(_delta):
-	print($"Ground Detection".is_colliding())
 	var input_velocity = Vector2.ZERO
 
 	$UI/HPBar.value = HP
@@ -44,11 +54,11 @@ func _physics_process(_delta):
 	for i in get_tree().get_nodes_in_group("Spells"):
 		if selected_slot == i.name:
 			i.self_modulate = Color(5,5,5)
-			i.get_child(0).play()
+			
 			
 		else:
 			i.self_modulate = Color(1,1,1)
-			i.get_child(0).stop()
+			
 	if $Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled == false:
 		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(1,10,1)
 	else:
@@ -170,17 +180,23 @@ func _input(event):
 		
 	if Input.is_key_pressed(KEY_1):
 		selected_slot = "SpellSlots1"
-
-		spell = "none"
-		$Body/ArmL/ForeArmL/HandL/Spell/Light.visible = false
+		spell = spells[0]
+		emit_signal("spell_switched",spell)
+		
 	elif Input.is_key_pressed(KEY_2):
 		selected_slot = "SpellSlots2"
+		spell = spells[1]
+		emit_signal("spell_switched",spell)
 		
-		spell = "Light"
-		$Body/ArmL/ForeArmL/HandL/Spell/Light.visible = true
 	elif Input.is_key_pressed(KEY_3):
 		selected_slot = "SpellSlots3"
-		spell = "none"
-		$Body/ArmL/ForeArmL/HandL/Spell/Light.visible = false
+		spell = spells[2]
+		emit_signal("spell_switched",spell)
+	
+	if Input.is_action_just_pressed("Use_Spell"):
+		emit_signal("spell_casted",spell)
+		
+	
+		
 func _on_Jump_timeout():
 	jumping = false
