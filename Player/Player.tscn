@@ -21,11 +21,11 @@
 [ext_resource path="res://Assets/UI/PC_ManaBarFill.png" type="Texture" id=26]
 [ext_resource path="res://Player/ItemInventory.gd" type="Script" id=27]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 1.47828, 10 )
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 27.6439 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 1.47828, 10 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "Attack2"
@@ -4230,18 +4230,65 @@ __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
-[node name="Head" type="Sprite" parent="Body"]
-position = Vector2( 0.910255, -16.0641 )
-texture = ExtResource( 8 )
-offset = Vector2( 0.5, -4.5 )
+[node name="ThighR" type="Sprite" parent="Body"]
+position = Vector2( -5.01215, 6.40523 )
+rotation = 0.412676
+texture = ExtResource( 5 )
+offset = Vector2( 0.5, 5 )
 __meta__ = {
 "_edit_ik_": true
 }
 
+[node name="ShinR" type="Sprite" parent="Body/ThighR"]
+position = Vector2( 1, 10 )
+rotation = -0.250624
+scale = Vector2( 1, 0.992894 )
+texture = ExtResource( 3 )
+offset = Vector2( 0, 5.5 )
+
+[node name="FootR" type="Sprite" parent="Body/ThighR/ShinR"]
+position = Vector2( -0.806993, 10.6689 )
+rotation = -0.152364
+texture = ExtResource( 4 )
+offset = Vector2( 2.5, 1 )
+
+[node name="Position2D" type="Position2D" parent="Body/ThighR/ShinR/FootR"]
+position = Vector2( 2.98829, 1.00272 )
+rotation = -2.33754
+__meta__ = {
+"_gizmo_extents_": 0.0
+}
+
+[node name="Position2D" type="Position2D" parent="Body/ThighR/ShinR/FootR/Position2D"]
+position = Vector2( 3.05883, 1.99723 )
+rotation = -3.96619
+__meta__ = {
+"_gizmo_extents_": 0.0
+}
+
+[node name="Body" type="Sprite" parent="Body"]
+position = Vector2( 0.395824, -1.10439 )
+rotation = -0.0214667
+texture = ExtResource( 6 )
+offset = Vector2( 0, -3.5 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="HurtBox" type="Area2D" parent="Body/Body"]
+position = Vector2( -0.461796, 0.378716 )
+monitorable = false
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Body/HurtBox"]
+visible = false
+position = Vector2( 0.56958, 1.42395 )
+shape = SubResource( 1 )
+
 [node name="ArmR" type="Sprite" parent="Body"]
 position = Vector2( -5.18929, -12.9714 )
 rotation = 0.0778249
-z_index = 1
 texture = ExtResource( 2 )
 offset = Vector2( -3, 5 )
 __meta__ = {
@@ -4249,7 +4296,7 @@ __meta__ = {
 }
 
 [node name="ForeArmR" type="Sprite" parent="Body/ArmR"]
-position = Vector2( -7, 12.5 )
+position = Vector2( -7.01297, 12.3336 )
 texture = ExtResource( 7 )
 offset = Vector2( 1, 4 )
 
@@ -4292,62 +4339,12 @@ __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
-[node name="Body" type="Sprite" parent="Body"]
-position = Vector2( 0.395824, -1.10439 )
-rotation = -0.0214667
-z_index = 1
-texture = ExtResource( 6 )
-offset = Vector2( 0, -3.5 )
+[node name="Head" type="Sprite" parent="Body"]
+position = Vector2( 0.910255, -16.0641 )
+texture = ExtResource( 8 )
+offset = Vector2( 0.5, -4.5 )
 __meta__ = {
 "_edit_ik_": true
-}
-
-[node name="HurtBox" type="Area2D" parent="Body/Body"]
-position = Vector2( -0.461796, 0.378716 )
-monitorable = false
-collision_layer = 0
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Body/HurtBox"]
-visible = false
-position = Vector2( 0.56958, 1.42395 )
-shape = SubResource( 1 )
-
-[node name="ThighR" type="Sprite" parent="Body"]
-position = Vector2( -5.01215, 6.40523 )
-rotation = 0.412676
-scale = Vector2( 1, 1 )
-texture = ExtResource( 5 )
-offset = Vector2( 0.5, 5 )
-__meta__ = {
-"_edit_ik_": true
-}
-
-[node name="ShinR" type="Sprite" parent="Body/ThighR"]
-position = Vector2( 1, 10 )
-rotation = -0.250624
-scale = Vector2( 1, 0.992894 )
-texture = ExtResource( 3 )
-offset = Vector2( 0, 5.5 )
-
-[node name="FootR" type="Sprite" parent="Body/ThighR/ShinR"]
-position = Vector2( -0.806993, 10.6689 )
-rotation = -0.152364
-texture = ExtResource( 4 )
-offset = Vector2( 2.5, 1 )
-
-[node name="Position2D" type="Position2D" parent="Body/ThighR/ShinR/FootR"]
-position = Vector2( 2.98829, 1.00272 )
-rotation = -2.33754
-__meta__ = {
-"_gizmo_extents_": 0.0
-}
-
-[node name="Position2D" type="Position2D" parent="Body/ThighR/ShinR/FootR/Position2D"]
-position = Vector2( 3.05883, 1.99723 )
-rotation = -3.96619
-__meta__ = {
-"_gizmo_extents_": 0.0
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -4553,8 +4550,8 @@ autostart = true
 position = Vector2( 0, 28.8476 )
 enabled = true
 cast_to = Vector2( 0, 1.2 )
-[connection signal="area_entered" from="Body/ArmR/ForeArmR/HandR/Weapon/Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_entered" from="Body/Body/HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="area_entered" from="Body/ArmR/ForeArmR/HandR/Weapon/Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Stun" to="." method="_on_Stun_timeout"]
 [connection signal="item_selected" from="UI/TabContainer/Items/ItemList" to="UI/TabContainer/Items" method="_on_ItemList_item_selected"]
