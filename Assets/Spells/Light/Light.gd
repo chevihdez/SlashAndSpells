@@ -29,9 +29,9 @@ func on_spell_switched(spell):
 
 
 func _on_Tween_tween_all_completed():
-	if $Light2D.scale.x == 2:
-		TweenNode.interpolate_property($Light2D, "scale", $Light2D.scale, Vector2(1, 1), 5,Tween.TRANS_LINEAR, Tween.EASE_IN)
+	if $Light2D.scale.x == 3:
+		TweenNode.interpolate_property($Light2D, "scale", $Light2D.scale, Vector2(2, 2), 5,Tween.TRANS_LINEAR, Tween.EASE_IN)
 		TweenNode.start()
-	if $Light2D.scale.x == 1:
-		TweenNode.interpolate_property($Light2D, "scale", $Light2D.scale, Vector2(2,2), 5,Tween.TRANS_LINEAR, Tween.EASE_IN)
+	if $Light2D.scale.x == 2:
+		TweenNode.interpolate_property($Light2D, "scale", $Light2D.scale, Vector2(3,3), 5,Tween.TRANS_LINEAR, Tween.EASE_IN)
 		TweenNode.start()

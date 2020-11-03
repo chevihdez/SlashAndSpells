@@ -10,6 +10,12 @@ var selected_slot = "SpellSlots1"
 var slots = ["SpellSlots1","SpellSlots2","SpellSlots3"]
 var spells = ["Heal","Light","None"]
 
+var items = ["Heal"]
+
+var itemRecourses = []
+
+var itemInstances = []
+
 var HP = 100
 var MaxHP = 100
 
@@ -22,6 +28,7 @@ var MaxMP = 100
 var combo = false
 
 var stop = false
+var ui_stop = false
 var rolling = false
 var jumping = false
 var direction = "right"
@@ -38,6 +45,15 @@ func _ready():
 	for i in slots:
 		get_node("UI/" + str(i)).texture = load("Assets/Spells/" + str(spells[int(i)-1]) + "/Profile.png")
 		print(i)
+	
+	for i in items:
+		itemRecourses.push_front(load("res://Assets/Items/"+ i + "/" + i + ".tscn"))
+	for i in itemRecourses:
+		itemInstances.push_front(i.instance())
+	for i in itemInstances:
+		$UI/TabContainer/Items/ItemList/Items.add_child(i, true)
+	for i in itemInstances:
+		$UI/TabContainer/Items/ItemList.add_item(i.get("Name"),i.get("Icon"))
 
 
 func _physics_process(_delta):
@@ -63,7 +79,7 @@ func _physics_process(_delta):
 		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(1,10,1)
 	else:
 		$Body/ArmR/ForeArmR/HandR/Weapon.modulate = Color(10,1,1)
-	if stop == false:
+	if stop == false and ui_stop == false:
 		if Input.is_action_pressed("Move_Right"):
 			input_velocity.x += 1
 			$Body.scale.x = 1
@@ -165,7 +181,7 @@ func _on_Area2D_area_entered(_area):
 func _on_Stun_timeout():
 	pass # Replace with function body.
 
-func _on_HurtBox_area_entered(area):
+func _on_HurtBox_area_entered(_area):
 	HP -= 15
 	
 
@@ -174,7 +190,7 @@ func _on_ComboEnd_timeout():
 	combo = false
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_key_pressed(KEY_H):
 		HP +=15
 		
@@ -196,7 +212,19 @@ func _input(event):
 	if Input.is_action_just_pressed("Use_Spell"):
 		emit_signal("spell_casted",spell)
 		
-	
-		
+	if Input.is_action_just_pressed("ui_cancel"):
+		if stop == false:
+			ui_stop = true
+		if $UI/TabContainer.visible == false:
+			$UI/TabContainer.visible = true
+		else:
+			$UI/TabContainer.visible = false
+			ui_stop = false
 func _on_Jump_timeout():
 	jumping = false
+
+
+
+
+
+

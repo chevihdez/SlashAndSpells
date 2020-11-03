@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/TileSet/Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Assets/TileSet/Exports/DecoScene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://NPCs/Enemies/PlayerType/Enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/TileSet/Elevators/Elevator.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 574.871, 322.334 )
@@ -66,3 +67,7 @@ position = Vector2( 665.916, 276.521 )
 
 [node name="Enemy3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1208.25, 228.836 )
+
+[node name="Elevator" parent="." instance=ExtResource( 4 )]
+position = Vector2( -198.264, 283.613 )
+target_height = 56

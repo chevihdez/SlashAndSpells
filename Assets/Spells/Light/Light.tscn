@@ -31,7 +31,7 @@ position = Vector2( 4.71121, 0.792997 )
 rotation = 1.73396
 frames = SubResource( 4 )
 animation = "Light"
-frame = 2
+frame = 1
 playing = true
 script = ExtResource( 3 )
 
@@ -47,7 +47,7 @@ __meta__ = {
 [node name="Light2D" type="Light2D" parent="."]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
-energy = 2.5
+energy = 3.0
 shadow_enabled = true
 
 [node name="Tween" type="Tween" parent="."]

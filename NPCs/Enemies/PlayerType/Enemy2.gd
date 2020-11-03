@@ -31,28 +31,29 @@ func _physics_process(_delta):
 		if distance_to_player <= 120 or agro == true:
 			if distance_to_player <= 30:
 				stop = true
-				$AnimationPlayer.play("LightAttack")
+				$AnimationTree.set("parameters/States/current", 4)
 				$Body/Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = false
 				if direction == "right":
 					velocity.x += 15
 				else:
 					velocity.x -= 15
-			elif $'/root/Main/Player'.position.x > self.position.x:
+
+			if $'/root/Main/Player'.position.x > self.position.x:
 				input_velocity.x += 1
 				$Body.scale.x = 1
 				direction = "right"
-				$AnimationPlayer.play("Walk")
+				$AnimationTree.set("parameters/States/current", 1)
 			elif $'/root/Main/Player'.position.x < self.position.x:
 				input_velocity.x -= 1
 				$Body.scale.x = -1
 				direction = "left"
-				$AnimationPlayer.play("Walk")
+				$AnimationTree.set("parameters/States/current", 1)
 			if $"Wall DetectionL".is_colliding() or $"Wall DetectionR".is_colliding():
 				velocity.y -= 200
 			if distance_to_player >= 240:
 				agro = false
 		else:
-			$AnimationPlayer.play("Idle")
+			$AnimationTree.set("parameters/States/current", 0)
 			
 
 
@@ -77,7 +78,7 @@ func _physics_process(_delta):
 		$Body/Body/ArmR/ForeArmR/HandR/Weapon/Area2D/CollisionShape2D.disabled = true
 	velocity = move_and_slide(velocity)
 	if HP <= 0:
-		$AnimationPlayer.play("Die")
+		$AnimationTree.set("parameters/States/current", 2)
 		$CollisionShape2D.disabled = true
 		stop = true
 		dead = true
@@ -100,7 +101,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func _on_HurtBox_area_entered(_area):
 	if dead == false:
-		$AnimationPlayer.play("Stagger")
+		$AnimationTree.set("parameters/States/current", 3)
 		stop = true
 		$Stun.start()
 		HP -= 15

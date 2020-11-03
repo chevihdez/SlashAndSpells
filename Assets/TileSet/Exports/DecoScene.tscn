@@ -6,21 +6,21 @@
 [ext_resource path="res://Assets/FX/Particles/blue_grey_50_opacity.png" type="Texture" id=4]
 [ext_resource path="res://Assets/FX/Particles/FireParticle.tres" type="Material" id=5]
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
 region = Rect2( 16, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 1 )
 region = Rect2( 32, 0, 16, 16 )
 
-[sub_resource type="SpriteFrames" id=8]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0
@@ -36,8 +36,8 @@ process_material = ExtResource( 5 )
 texture = ExtResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 8 )
-frame = 1
+frames = SubResource( 4 )
+frame = 2
 playing = true
 
 [node name="Light2D" type="Light2D" parent="AnimatedSprite"]
